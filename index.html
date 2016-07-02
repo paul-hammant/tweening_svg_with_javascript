@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://code.jquery.com/jquery-3.0.0.min.js"
+            integrity="sha256-JmvOoLtYsmqlsWxa7mDSLMwa6dZ9rrIdtrrVYRnDRH0="
+            crossorigin="anonymous"></script>
+    <script>
+
+        function svgSourceToInjectableDom(source) {
+
+            var div = document.createElementNS('http://www.w3.org/1999/xhtml', 'div');
+            div.innerHTML = source;
+            var docFragment = document.createDocumentFragment();
+            while (div.firstChild.firstChild)
+                docFragment.appendChild(div.firstChild.firstChild);
+            return docFragment;
+        }
+
+        function escapeAttr(theAttr) {
+            var replace = theAttr
+                    .replace(/\(/g, "( ").replace(/\)/g, " )")
+                    .replace(/,/g, " ,").replace(/  /g, " ");
+            return replace.split(" ");
+        }
+
+        function unEscapeAttr(theAttr) {
+            return theAttr
+                    .replace(/\( /g, "(").replace(/ \)/g, ")")
+                    .replace(/ ,/g, ",");
+        }
+
+        function calcTween(fractn, fromAttr, toAttr) {
+            var froms = escapeAttr(fromAttr);
+            var tos = escapeAttr(toAttr);
+            var result = "";
+            for (p = 0; p < froms.length; p++) {
+                if (isNaN(froms[p])) {
+                    result = result + " " + froms[p];
+                } else {
+                    var fromNum = parseFloat(froms[p]);
+                    var toNum = parseFloat(tos[p]);
+                    if (fromNum !== toNum) {
+                        num = ((toNum - fromNum) * fractn) + fromNum;
+                        result = result + " " + num.toFixed(0);
+                    } else {
+                        result = result + " " + fromNum;
+                    }
+                }
+            }
+
+            return $.trim(unEscapeAttr(result));
+        }
+
+        var transitionSteps = 100;
+        var transitionMillis = 700;
+
+        var tweens = [];
+        $.get("/slide0.svg", function (data0) {
+            var slide0Raw = data0;
+            // console.log("r " + data0);
+            var slide0 = $(data0);
+
+            $.get("/slide1.svg", function (data1) {
+                var slide1 = $(data1);
+                for (i = 0; i <= transitionSteps; i++) {
+                    var tween = {};
+                    // two 'x' attributes, one 'fill' and one 'd' (for a path) may change
+                    tween.t0_x = calcTween(i / transitionSteps, $("#t0", slide0).attr("x"), $("#t0", slide1).attr("x"));
+                    tween.t0_fill = calcTween(i / transitionSteps, $("#t0", slide0).attr("fill"), $("#t0", slide1).attr("fill"));
+                    tween.t1_x = calcTween(i / transitionSteps, $("#t1", slide0).attr("x"), $("#t1", slide1).attr("x"));
+                    tween.t2_d = calcTween(i / transitionSteps, $("#t2", slide0).attr("d"), $("#t2", slide1).attr("d"));
+                    tweens.push(tween);
+                }
+
+                // console.log(JSON.stringify(tweens));
+
+                // JQuery itself, cannot place SVG in the DOM as SVG is not HTML
+                document.getElementById('HERE').appendChild(svgSourceToInjectableDom(slide0Raw));
+
+                (function myLoop(i) {
+                    setTimeout(function () {
+                        p = tweens.length - i;
+                        // Those four changing attributes again
+                        $("#t0").attr("x", tweens[p].t0_x)
+                                .attr("fill", tweens[p].t0_fill.replace(/ ,/g, ","));
+                        $("#t1").attr("x", tweens[p].t1_x);
+                        $("#t2").attr("d", tweens[p].t2_d);
+                        if (--i) myLoop(i);
+                    }, (transitionMillis/tweens.length))
+                })(tweens.length);
+
+            }, "text");
+        }, "text");
+    </script>
+</head>
+<body id="HERE">
+</body>
+</html>

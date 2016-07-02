@@ -1,0 +1,31 @@
+<div>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xl="http://www.w3.org/1999/xlink" version="1.1"
+     viewBox="62.125 53.125 514.75 361.75" width="514.75pt" height="361.75pt"
+     xmlns:dc="http://purl.org/dc/elements/1.1/">
+    <metadata>Produced by OmniGraffle 6.6
+        <dc:date>2016-07-02 11:45:20 +0000</dc:date>
+    </metadata>
+    <defs/>
+    <g stroke="none" stroke-opacity="1" stroke-dasharray="none" fill="none" fill-opacity="1">
+        <title>Canvas 1</title>
+        <rect fill="white" width="653" height="855"/>
+        <g>
+            <title>Layer 1</title>
+            <rect x="72" y="63" width="495" height="342" fill="#bfbfbf"/>
+            <rect x="72" y="63" width="495" height="342" stroke="black" stroke-linecap="round" stroke-linejoin="round"
+                  stroke-width="1"/>
+            <rect id="t0" x="324" y="108" width="54" height="45" fill="rgb( 255 , 0 , 0)"/>
+            <rect id="t1" x="324" y="108" width="54" height="45" stroke="black" stroke-linecap="round" stroke-linejoin="round"
+                  stroke-width="1"/>
+            <rect x="144" y="360" width="234" height="27" fill="red"/>
+            <rect x="144" y="360" width="234" height="27" stroke="black" stroke-linecap="round" stroke-linejoin="round"
+                  stroke-width="1"/>
+            <rect x="126" y="108" width="54" height="45" fill="red"/>
+            <rect x="126" y="108" width="54" height="45" stroke="black" stroke-linecap="round" stroke-linejoin="round"
+                  stroke-width="1"/>
+            <path id="t2" d="M 345.72009 153.000005 C 331.15233 212.41867 288.45119 369 243 369 C 197.54881 369 166.66512 212.41865 156.5818 152.99999"
+                  stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+        </g>
+    </g>
+</svg>
+</div>
