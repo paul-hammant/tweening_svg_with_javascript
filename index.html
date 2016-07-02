@@ -57,12 +57,12 @@
         var transitionMillis = 700;
 
         var tweens = [];
-        $.get("/slide0.svg", function (data0) {
+        $.get("slide0.svg", function (data0) {
             var slide0Raw = data0;
             // console.log("r " + data0);
             var slide0 = $(data0);
 
-            $.get("/slide1.svg", function (data1) {
+            $.get("slide1.svg", function (data1) {
                 var slide1 = $(data1);
                 for (i = 0; i <= transitionSteps; i++) {
                     var tween = {};
